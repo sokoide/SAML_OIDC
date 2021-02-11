@@ -1,0 +1,18 @@
+version : "3"
+
+services:
+  keycloak:
+
+    image: quay.io/keycloak/keycloak:12.0.2
+    volumes:
+      - ./certs:/etc/x509/https
+    container_name: keycloak
+    restart: always
+    ports:
+      - 8080:8080
+      - 8443:8443
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    networks:
+      - web
