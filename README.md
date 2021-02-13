@@ -3,7 +3,7 @@
 ## About
 
 * The repo demonstrates SAML and OIDC Single Singon with Keycloak as a SAML IdP
-* It uses small Go programs as SAML SP
+* It uses small Go programs as SAML/OIDC SP
 
 ## Keycloak
 
