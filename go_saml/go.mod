@@ -1,4 +1,4 @@
-module sokoide.com/go_auth
+module sokoide.com/go_saml
 
 go 1.16
 
