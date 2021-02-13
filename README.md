@@ -82,7 +82,7 @@ export GODEBUG="x509ignoreCN=0"
 go run go_saml.go
 ```
 
-* Access go_saml URL http://$yourhost:$port/hello by a browser
+* Access URL http://$yourhost:$port/hello in a browser
 * It'll be redirected to Keycloak
 * Logon as 'scott'
 ![Keycloak](docs/keycloak.png)
@@ -119,7 +119,7 @@ export GODEBUG="x509ignoreCN=0"
 go run go_oidc.go
 ```
 
-* Access go_saml URL http://$yourhost:$port/hello by a browser
+* Access URL http://$yourhost:$port/hello in a browser
 * It'll be redirected to Keycloak
 * Logon as 'scott'
 * You'll get something like below
