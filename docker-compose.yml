@@ -14,5 +14,4 @@ services:
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
-    networks:
-      - web
+
