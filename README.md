@@ -18,9 +18,16 @@ openssl req -x509 -new -nodes -key ca.key -subj "/CN=rootca" -days 10000 -out ca
 openssl genrsa 2048 > server.key
 openssl req -new -key server.key -subj "/CN=timemachine" > server.csr
 openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -days 10000 -out server.crt
+# for Keycloak
 mkdir certs
 cp server.key certs/tls.key
 cp server.crt certs/tls.crt
+# for Grafana
+cp ca.crt grafana_oidc/ca.crt
+cp server.key grafana_oidc/server.key
+cp server.crt grafana_oidc/server.crt
+cp server.key grafana_oidc/client.key
+cp server.crt grafana_oidc/client.crt
 ```
 
 ### How to run
@@ -106,7 +113,7 @@ go run go_saml.go
     * Copy secret into go_oidc.go -> secret in getConfig()
 * Create 'scott' user in Users menu with a password with _Temporary_ false
 
-### How to run OIDC SP
+### How to run OIDC SP - Go
 
 * Change `go_oidc.go`
   * Change `scottmm.local` to your host name
@@ -140,3 +147,18 @@ go run go_oidc.go
     }
 }
 ```
+
+### How to run OIDC SP - Grafana
+
+* Configure Keycloak similarly
+* Change `grafana_oidc/grafana.ini`
+  * Change `timemachine` to your Docker host which runs grafana
+  * Change `timemachine:8443` to your keycloak host name
+  * Change `allowed_domains` to your Keycloak users' email domain
+  * Change `client_id` and `client_secret`
+* Run grafana
+```bash
+docker run -v /home/scott/repo/SAML_OIDC/grafana_oidc:/var/tmp/grafana -e GF_PATHS_CONFIG=/var/tmp/grafana/grafana.ini -e GF_SERVER_ROOT_URL=https://timemachine:3000/ -p 3000:3000 --network host grafana/grafana
+```
+* Visit https://timemachine:3000 -> "Sing in with OAuth"
+![Login](docs/grafana_login.png)
